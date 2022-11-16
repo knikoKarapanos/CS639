@@ -19,15 +19,19 @@ outputs = net(images)
 _, predicted = torch.max(outputs, 1)
 print('Predicted: ', ' '.join('%5s' % class_data.idx_to_class[int(predicted[j])] for j in range(4)))
 
-correct = 0
-total = 0
+correct = {class_: 0 for class_ in classes}
+total = {class_: 0 for class_ in classes}
 
 with torch.no_grad():
     for data in test_loader:
         images, labels = data
         outputs = net(images)
         _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
-        correct += (predicted == labels).sum().item()
+        for label, preds in zip(labels, predicted):
+            if label == preds:
+                correct[class_data.idx_to_class[int(label)]] += 1
+            total[class_data.idx_to_class[int(label)]] += 1
 
-print("Accuracy on the network of %d images is %.2f %%" % (total, 100 * correct / total))
+for classname, correct_count in correct.items():
+    accuracy = 100 * float(correct_count) / total[classname]
+    print("Accuracy of %5s : %2d %%" % (classname, accuracy))
