@@ -18,7 +18,7 @@ from Data import *
 
 def main():
 
-    EPOCHS = 2
+    EPOCHS = 5
     load_data()
     train_loader = get_train_loader()
 

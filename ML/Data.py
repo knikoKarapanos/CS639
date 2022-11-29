@@ -56,7 +56,7 @@ def load_data():
         if path.is_dir():
             classes.append(path.name)
             for image_path in path.iterdir():
-                if np.random.random() < 0.1:
+                if np.random.random() < 0.05:
                     test_image_paths.append(image_path)
                 else:
                     train_image_paths.append(image_path)

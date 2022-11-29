@@ -2,7 +2,12 @@ from torchvision import datasets, models, transforms
 import torch.nn.functional as F
 from torch import nn
 
-NUM_CLASSES = 12
+BINARY_FRESH_STALE = True
+
+if BINARY_FRESH_STALE:
+    NUM_CLASSES = 2
+else:
+    NUM_CLASSES = 12
 
 data_transforms = {
     'train': transforms.Compose([
