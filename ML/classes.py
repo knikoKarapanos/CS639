@@ -2,7 +2,7 @@ from torchvision import datasets, models, transforms
 import torch.nn.functional as F
 from torch import nn
 
-BINARY_FRESH_STALE = True
+BINARY_FRESH_STALE = False
 
 if BINARY_FRESH_STALE:
     NUM_CLASSES = 2

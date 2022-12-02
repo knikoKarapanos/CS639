@@ -18,7 +18,7 @@ from Data import *
 
 def main():
 
-    EPOCHS = 5
+    EPOCHS = 3
     load_data()
     train_loader = get_train_loader()
 
@@ -43,12 +43,12 @@ def main():
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
-            if i % 200 == 199:
+            if i % 50 == 49:
                 print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 2000))
                 running_loss = 0.0
 
     print('Finished Training')
-    outfile = "model.pth"
+    outfile = "model.pth" if not BINARY_FRESH_STALE else "model_binary.pth"
     torch.save(net.state_dict(), outfile)
 
 if __name__ == "__main__":

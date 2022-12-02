@@ -2,6 +2,7 @@ from collections import OrderedDict
 import torch
 
 from Data import *
+from classes import BINARY_FRESH_STALE
 
 
 class_data = load_data()
@@ -13,7 +14,10 @@ images, labels = next(dataiter)
 
 net = Net()
 
-net.load_state_dict(torch.load("model.pth"))
+if BINARY_FRESH_STALE:
+    net.load_state_dict(torch.load("model_binary.pth"))
+else:
+    net.load_state_dict(torch.load("model.pth"))
 
 outputs = net(images)
 

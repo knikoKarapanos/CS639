@@ -54,16 +54,20 @@ def load_data():
     global valid_image_paths
     for path in Path('../data').iterdir():
         if path.is_dir():
-            classes.append(path.name)
+            if BINARY_FRESH_STALE:
+                fresh_stale = path.name.split("_")[0]
+                if fresh_stale not in classes:
+                    classes.append(fresh_stale)
+            else:
+                classes.append(path.name)
             for image_path in path.iterdir():
                 if np.random.random() < 0.05:
                     test_image_paths.append(image_path)
                 else:
                     train_image_paths.append(image_path)
                 
-    train_image_paths, valid_image_paths = train_image_paths[:int(0.8*len(train_image_paths))], train_image_paths[int(0.8*len(train_image_paths)):]
 
-    print("Train size {}, valid size {}, test size {}".format(len(train_image_paths), len(valid_image_paths), len(test_image_paths)))
+    print("Train size {}, test size {}".format(len(train_image_paths), len(test_image_paths)))
     print("There are {} classes".format(len(classes)))
 
     class_data = ProduceClasses(classes)
@@ -74,10 +78,6 @@ def load_data():
 def get_train_loader():
     train_dataset = ProduceDataset(train_image_paths, transform=data_transforms['train'])
     return DataLoader(train_dataset, batch_size=32, shuffle=True)
-
-def get_valid_loader():
-    valid_dataset = ProduceDataset(valid_image_paths, transform=data_transforms['valid'])
-    return DataLoader(valid_dataset, batch_size=32, shuffle=True)
 
 def get_test_loader():
     test_dataset = ProduceDataset(test_image_paths, transform=data_transforms['valid'])
