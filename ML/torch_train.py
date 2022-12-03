@@ -1,24 +1,19 @@
-import time
-import json
-import copy
-
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from collections import OrderedDict
 
 
 import torch
 import torch.optim as optim
-from torch.autograd import Variable
-import torchvision
-from torch.utils.data.sampler import SubsetRandomSampler
 import torch.nn as nn
+import matplotlib.pyplot as plt
 
 from classes import *
 from Data import *
 
 def main():
 
-    EPOCHS = 3
+    EPOCHS = 5
     load_data()
     train_loader = get_train_loader()
 
@@ -36,6 +31,23 @@ def main():
     for epoch in range(EPOCHS):
         running_loss = 0.0
         for i, data in enumerate(train_loader, 0):
+            # Save first 4 images as figure
+            if epoch == 0 and i == 0:
+                plt.ioff()
+                plt.subplots_adjust(hspace=1, wspace=1.2)
+                for j in range(4):
+                    image = images[j]
+                    image = image.numpy().transpose((1, 2, 0))
+                    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    image = cv2.resize(image, (50, 50))
+                    image = np.clip(image, 0, 1)
+                    plt.subplot(2, 2, j + 1)
+                    plt.imshow(image)
+                    plt.title(classes[labels[j]])
+                plt.savefig("images/train_images.png")
+
+            
+
             inputs, labels = data
             optimizer.zero_grad()
             outputs = net(inputs)

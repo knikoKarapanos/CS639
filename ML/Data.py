@@ -3,6 +3,7 @@ from pathlib import Path
 
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 
 from classes import *
 
@@ -69,6 +70,25 @@ def load_data():
 
     print("Train size {}, test size {}".format(len(train_image_paths), len(test_image_paths)))
     print("There are {} classes".format(len(classes)))
+
+    # Save 1 image from each class in 1 figure
+    
+    plt.ioff()
+    print("One image from each class")
+    for class_ in classes:
+        path = Path("../data") / class_
+        image_path = list(path.iterdir())[0]
+        image = cv2.imread(str(image_path), cv2.IMREAD_COLOR)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, (100, 100))
+        # Create a 6x2 subplot
+        plt.subplots_adjust(hspace=1, wspace=1.2)
+        plt.subplot(3, 4, classes.index(class_) + 1)
+        plt.imshow(image)
+        plt.title(class_)
+    plt.savefig("images/classes.png")
+
+
 
     class_data = ProduceClasses(classes)
     return class_data
