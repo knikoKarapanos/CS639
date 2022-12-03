@@ -21,11 +21,11 @@
 title: Produce Classification with Computer Vision and Computational Filtering
 email: udlis@wisc.edu & karapkanos@wisc.edu
 description: ""
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/CS639" # the subpath of your site, e.g. /blog
+url: "eudds.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
-theme: minima
+theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
 
