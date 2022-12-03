@@ -30,7 +30,7 @@ We used the Stoiastic Gradient Descent optimizer and the Cross Entropy loss func
 ### Results
 We trained the model for 5 epochs and achieved an overall accuracy of 88% on the test set. 
 The worst performaing produce were stale tomatos and oranges with an accuracy of 71% for those two classes. 
-The best performing classes were fresh and stale capsicum and gourds with 100% accuracy. As the model stands right now 8 out of the 12 classes met our goal of 90% accuracy. Please consult (Future Improvements & Learnings)[#Future Improvements & Learnings] for possible methodologies to improve our model further. Below are the accuracies for each class and confusion matrix for the model.
+The best performing classes were fresh and stale capsicum and gourds with 100% accuracy. As the model stands right now 6 out of the 12 classes met our goal of 90% accuracy. Please consult (Future Improvements & Learnings)[#Future Improvements & Learnings] for possible methodologies to improve our model further. Below are the accuracies for each class and confusion matrix for the model.
 
 ![](images/accuracy.png)
 <div align="center"> Figure 2: The accuracy of the model for each class </div>
