@@ -29,8 +29,9 @@ We used the Stoiastic Gradient Descent optimizer and the Cross Entropy loss func
 
 ### Results
 We trained the model for 5 epochs and achieved an overall accuracy of 88% on the test set. 
-The worst performaing produce were stale tomatos and oranges with an accuracy of 71% for those two classes. 
-The best performing classes were fresh and stale capsicum and gourds with 100% accuracy. As the model stands right now 6 out of the 12 classes met our goal of 90% accuracy. Please consult (Future Improvements & Learnings)[#Future Improvements & Learnings] for possible methodologies to improve our model further. Below are the accuracies for each class and confusion matrix for the model.
+The worst performaing produce were stale tomatos and oranges with an accuracy of 71% for those two classes. This is much better than our midterm overall accuracy of 63% and we are confident that we can improve this accuracy with a more refined model.
+
+The best performing classes were fresh and stale capsicum and gourds with 100% accuracy. As the model stands right now 6 out of the 12 classes met our goal of 90% accuracy. Please consult Analysis and Encountered Problems for possible methodologies to improve our model further. Below are the accuracies for each class and confusion matrix for the model.
 
 ![](images/accuracy.png)
 <div align="center"> Figure 2: The accuracy of the model for each class </div>
@@ -48,6 +49,16 @@ On top of this, we are also both new to machine learning and the fastai library,
 ### Computational Filtering
 Rotten or stale produce have visual impurities that we can try to filter and smooth across the whole image to determine if such an impurity exists. Filters applied could range from a median pixel filtering to determine if a pixel isn’t close to it’s neighboring pixels to determine a rotten spot. However this approach would only work for produce that has significantly discolored spots. Another method could be to compare brightness of the pixels of the object compared to the brightness of the background to find a pale, washed out color found on stale tomatoes, apples, and other red produce. A problem with this approach is that it’s unknown how this method would apply to other colored produce. A combination of the above with a voting system could give an accurate classification on if a produce is imperfect or not.
 
+
+## Decision
+It's not unfair to say that neural networks are a buzzword nowadays. You can see machine learning being thrown into a vast majority of computer vision projects being released. To test if we really needed to utilize machine learning for this particualar project, we decided to do a two pronged approach and test the two. We'll be evaluating the complexity that went into each approach and the accuracy of each approach.
+
+The neural network approach had a steep learning curve. But once we got the hang of it, we were able to get a model up and running in a few hours. The bulk of our time was spent on data preprocessing and fine tuning the model layers. It's performance was overall very good as explained above with an overall accuracy of 90%. There is room for improvement and clear starting points to do so given more time.
+
+The computational method had far more challenges. The learning curve was not as steep as the comptational filters of edge detection to find pronounced blemishes and using color intensity to find discoloration in produce were introductory concepts from the beginning of class.
+However the random nature of rotten produce proved difficult to integrate these filters into one standalone pipeline. It ended with us not being able to get very accurate results out of it.
+
+We decided that a machine learning approach was the way to go for this use case because of the random nature of how produce decays and how machine learning allowed us to "black box" all the filtering and detection of blemishes and discoloration.
 
 ## Timeline
 | Milestone                                                                                      	| Date          	|
