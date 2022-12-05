@@ -2,10 +2,12 @@
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
-layout: home
+layout: default
 ---
 
-## Background
+# Produce Classification Using Computer Vision
+
+# Background
 
 Since the start of the Agricultural Revolution, technology has fueled many of the advancements in the production, cultivation and management practices of the agricultural industry. Today, as the shrinking number of agricultural workers continues to diminish in the U.S, farmers are once again looking to technology to solve the issues presented to them. The practice of sorting and grading produce at the time of harvest is a great undertaking that requires a lot of time, manual labor and resources. To minimize these constraints, automation is favorable when the task at hand is very mundane and repetitive. Emerging technologies in the field of computer vision, robotics and machine learning have made it possible for this automation to take place. Many Farms across the U.S are already making use of these technologies by supporting automations in the seeding/weeding, harvesting and even fertilization processes. The problem we have decided to take on for our project is in the sorting and grading portion after the harvest, when many laborers and resources are used to sort through the produce. What we wish to solve for this project is the problem of classifying produce as rotten or fresh. We will achieve this through state of the art computer vision and machine learning techniques we have learned in class. We will be using modern methods of computational filtering in order to preprocess the images. This will be important before sending them downstream to our machine learning model to reduce noise and detect edges and boundaries. When applying a machine learning model we will aim to use the latest and most established libraries to further our learning and establish the most accurate results.This process has been previously created and implemented in many farms today, but we wish to understand and possibly even expand on this research, as it would help many Agricultural workers. While we will closely follow past research and methods in order to achieve our goals, this project will give us the opportunity to gain experience using Neural networks, as well as try different computational filters to try and solve this widespread problem. The world population is only growing along with the demand for food, and issues such as these are paramount to the sustainability of the world food supply. By solving this issue we can reduce the manual labor and time required to sort and grade the produce, which will give more time and resources back to the farmer. 
 
@@ -20,6 +22,7 @@ Using a dataset of annotated pictures, we could use existing machine learning li
 
 ### Gathering and Preprocessing Data
 We used a dataset of 14,700 images from Kaggle.com. This dataset has 12 classes, fresh and stale apples, oranges, bananas, gourds, capsicums, and tomatos and To preprocss the data we simply resized the image down to 50 by 50 pixels and normalized the pixel values. We then split the data into a training and testing set with a 95%/5% split.
+
 ![](images/classes.png)
 <div align="center"> Figure 1: The 12 classes of produce in the dataset </div>
 
@@ -35,6 +38,7 @@ The best performing classes were fresh and stale capsicum and gourds with 100% a
 
 ![](images/accuracy.png)
 <div align="center"> Figure 2: The accuracy of the model for each class </div>
+
 ![](images/confusion_matrix.png)
 <div align="center"> Figure 3: The confusion matrix for the model </div>
 
