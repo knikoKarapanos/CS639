@@ -44,11 +44,56 @@ The worst performing classes, stale tomatos and oranges, were most confused with
 
 On top of this, we are also both new to machine learning and the fastai library, so a good amount of time was spent reasearching and learning how to use the library let alone a more efficient and accurate model.
 
+---
+
+## Computational Model
+ In our computational model we decided to approach the problem from established methods of using image intensity values to locate rotted regions of our produce. Images obtained from the Kaggle data set as mentioned above, are used as the input data to avoid any biases in terms of obtaining our results. Through a series of filtering, we reduce noise and smaller imperfections that are not considered rotted areas to obtain images that highlight features that are more considerable in size. To further highlight significant areas and reduce noise, morphological operations are used to expand and erode areas defined by a structuring element that is applied on the image. Once this is complete we will have removed small objects from an image, while preserving the shape and size of larger objects in the image. Once the image is filtered, we impose Otsu's algorithm to the filtered image to reconstruct it as a binary image to better segregate the highlighted areas. From here we now have an image that can be better segmented in order to make comparisons between regions of interest. This is done using Blob detection that segments areas based off connected components. Once we have the components we can compare the area of the blogs found in the image to area of the produce. We assign a threshold value that returns whether or not the blobs are significant enough to render the produce as rotten if it surpasses this threshold.  
+
+* **Filtering**
+
+    Produce often has smaller visual impurities that should not be considered as rotted areas, such as speckles, pores and lenticels. To deal with these features we filter and smooth across the whole image to only consider more defining features. Filtering is carried out by a series of methods to denoise and enhance image features in order to obtain an image that can be better segmented downstream in the algorithm. First we blur the image in order to remove any minor imperfections. Then the image contrast is increase to differentiate areas in the image. Then finally, we apply a _12x12_ median filter to the image to further smooth any remaining noise. A median filter was chosen for its ability to denoise images while preserving sharp edges. 
+
+* **Morphology**
+    
+    Morphology is a broad set of image processing operations that process images based on structuring elements. In a morphological operation, each pixel in the image is adjusted based on the value of other pixels in its neighborhood. In our project we use a disk structuring element with a radius of 5 pixels when considering neighboring pixels. The disk structuring element is used because of its ability to round concave boundaries while preserving the shape of convex boundaries, which is more applicable to fruits and vegetables. The process starts by first eroding the image which removes floating pixels and thin lines so that only substantive objects remain. Next dilation is performed to make the remaining image features more visible and fill in small holes in image. Lines appear thicker, and filled shapes appear larger.
+    
+
+* **Segmentation**
+    To perform our blob detection downstream we must first convert the image to a binary image for segmentation. First we will apply Otsu's algorithm to define the foreground and background pixels. Otsu's method, works by calculating a threshold value which minimizes the intraclass variance of pixels. when performed it replaces all values above a globally determined threshold with 1s and setting all other values to 0s. Applying this operation turns darker pixels to 0 for false and lighter pixels to 1 for true. The resulting image will turn the background to white and the foreground to black. Since our region of interest lies within the foreground, we must invert the image to capture the produce itself. The final step is segmenting the image by capturing the blob considered to be the produce itself and the blobs considered to be rotted areas or imperfections. We first fill the resulting image which removes the imperfections from the image to get the produce blob. Then we subtract that image from the previous image to obtain the rotted region blobs. Now we have a means of calculating a difference in the image to determine if the imperfections were significant enough to be considered rotten produce. 
+ 
+
+* **Calculation**
+    In order to determine whether the produce is rotted or not we will calculate the area of the fruit and the area of the rotted regions. Once these areas are calculated we divide the area of the rotted regions by the area of the produce to calculate a score that we will compare against a threshold value. If the score exceeds the threshold the produce will be sorted into the rotted produce folder and if not, then sorted into the fresh produce folder.  
 
 
-### Computational Filtering
-Rotten or stale produce have visual impurities that we can try to filter and smooth across the whole image to determine if such an impurity exists. Filters applied could range from a median pixel filtering to determine if a pixel isn’t close to it’s neighboring pixels to determine a rotten spot. However this approach would only work for produce that has significantly discolored spots. Another method could be to compare brightness of the pixels of the object compared to the brightness of the background to find a pale, washed out color found on stale tomatoes, apples, and other red produce. A problem with this approach is that it’s unknown how this method would apply to other colored produce. A combination of the above with a voting system could give an accurate classification on if a produce is imperfect or not.
+![](images/stages.png)
+<div align="center"> Figure 4: Computational Model Stages </div>
 
+
+
+
+### Results
+
+    we'll talk...
+
+ 
+ 
+
+
+
+
+ ### Analysis and Encountered Problems
+
+    When starting the project we considered established methods which used the intensity value shifts to find regions of interest based off grayscled images. The main issue with this is that our data from Kaggle had substantial background noise and objects that manipulated the way blob detection was performed. In the established methods this project was adapted from, images were taken from a conveyer belt which provided a uniform background which would compensate for this issue. Additionally, the images were taken using differnt lightingn conditions that were not uniform and added glare to the images when light reflected off the vegitables. This created false positives for rotted regions in the image and returned the produce as rotten when it should have been fresh. In the established methods, images were taken from light that passed through a polorized filter to reduce glare and increase image quality and contrast. When inputing images not apart of the kaggle dataset, results were greatly improved when using highier quality images. 
+
+
+
+
+dont know if need this now?
+ However this approach would only work for produce that has significantly discolored spots. Another method could be to compare brightness of the pixels of the object compared to the brightness of the background to find a pale, washed out color found on stale tomatoes, apples, and other red produce. A problem with this approach is that it’s unknown how this method would apply to other colored produce. A combination of the above with a voting system could give an accurate classification on if a produce is imperfect or not.
+
+
+---
 
 ## Decision
 It's not unfair to say that neural networks are a buzzword nowadays. You can see machine learning being thrown into a vast majority of computer vision projects being released. To test if we really needed to utilize machine learning for this particualar project, we decided to do a two pronged approach and test the two. We'll be evaluating the complexity that went into each approach and the accuracy of each approach.
@@ -73,3 +118,5 @@ We decided that a machine learning approach was the way to go for this use case 
 
 ## Resources Materials and Cites
 * [Kaggle.com](https://www.kaggle.com/sriramr/fruits-fresh-and-rotten-for-classification) - Dataset used for machine learning model
+
+* [iopscience.iop.org](https://iopscience.iop.org/article/10.1088/1742-6596/1952/2/022048/pdf) - The computational model is a variation based on the ideas of the Wuhan University of Technology's methods. 
