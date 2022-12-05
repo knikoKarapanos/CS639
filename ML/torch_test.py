@@ -53,7 +53,7 @@ with torch.no_grad():
 # Create confusion matrix
 # Normalize the data
 confusion_matrix = metrics.confusion_matrix(all_labels, all_predicted, normalize='true')
-plt.figure(figsize=(10, 10))
+plt.figure()
 plt.imshow(confusion_matrix, interpolation='nearest', cmap=plt.cm.Reds)
 plt.title("Confusion Matrix (Normalized)")
 plt.colorbar()
@@ -73,7 +73,7 @@ for classname, correct_count in correct.items():
 
 # Plot Accuracy of each class
 accs = [(100 * float(v) / total[c]) for c, v in correct.items()]
-bar_colors = ["green" if accuracy > 90 else "yellow" if accuracy > 63 else "red" for accuracy in accs]
+bar_colors = ["green" if accuracy >= 90 else "yellow" if accuracy > 63 else "red" for accuracy in accs]
 plt.ioff()
 plt.figure()
 plt.bar(range(len(correct)), accs, align='center', color=bar_colors)
@@ -87,6 +87,8 @@ plt.savefig("images/accuracy.png")
 
 # Print overall accuracy
 print("Overall accuracy: %2d %%" % (100 * sum(correct.values()) / sum(total.values())))
+
+print("Mean Accuracy across classes %.2f %%" % (np.mean(accs)))
 
 
 for classname, wrong_count in wrongs.items():
